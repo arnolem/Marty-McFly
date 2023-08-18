@@ -1,11 +1,11 @@
 <?php
 
-namespace Luke\Skywalker;
+namespace Marty\McFly;
 
 use Doctrine\Bundle\FixturesBundle\Fixture as DoctrineFixture;
 use Faker\Factory;
 use Faker\Generator;
-use Interface\CreateInterface;
+use Marty\McFly\Interface\CreateInterface;
 
 abstract class Fixture extends DoctrineFixture implements CreateInterface
 {
@@ -17,45 +17,19 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         self::$faker = Factory::create('fr_FR');
     }
 
-    /**
-     * Helper pour tirer aléatoirement une valeur dans un tableau
-     */
-    public static function randomValue(array $array)
-    {
-        if (empty($array)) {
-            return null;
-        }
-
-        return $array[array_rand($array)];
-    }
-
     public static function count(): int
     {
         return self::$count;
     }
 
+    protected static function setFaker(Generator $faker): void
+    {
+        self::$faker = $faker;
+    }
+
     protected static function getFaker(): Generator
     {
         return self::$faker;
-    }
-
-    /**
-     * Add or update
-     */
-    public function setReference($name, $object): void
-    {
-        $reference = $this->uniqueRef($name, $object::class);
-        parent::setReference($reference, $object);
-    }
-
-    /**
-     * Get by classname and ID
-     */
-    public function getReference($name, $class = null): ?object
-    {
-        $reference = $this->uniqueRef($name, $class);
-
-        return parent::getReference($reference, $class);
     }
 
     /**
@@ -67,11 +41,32 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         parent::addReference($reference, $object);
     }
 
+    private function uniqueRef($name, $class): string
+    {
+        return $class . ':' . $name;
+    }
+
     public function hasReference($name, ?string $class = null): bool
     {
         $reference = $this->uniqueRef($name, $class);
 
         return parent::hasReference($reference, $class);
+    }
+
+    public function getReferences(): array
+    {
+        return $this->referenceRepository->getReferences();
+    }
+
+    public function getRandomReferenceByClass(string $class): object
+    {
+        $referenceByClass = $this->getReferencesByClass($class);
+        $object           = self::randomValue($referenceByClass);
+        if ($object === null) {
+            throw new RuntimeException("No reference by $class");
+        }
+
+        return $object;
     }
 
     /**
@@ -96,20 +91,26 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
 
     }
 
-    public function getReferences(): array
+    /**
+     * Get by classname and ID
+     */
+    public function getReference($name, $class = null): ?object
     {
-        return $this->referenceRepository->getReferences();
+        $reference = $this->uniqueRef($name, $class);
+
+        return parent::getReference($reference, $class);
     }
 
-    public function getRandomReferenceByClass(string $class): object
+    /**
+     * Helper pour tirer aléatoirement une valeur dans un tableau
+     */
+    public static function randomValue(array $array)
     {
-        $referenceByClass = $this->getReferencesByClass($class);
-        $object           = self::randomValue($referenceByClass);
-        if ($object === null) {
-            throw new RuntimeException("No reference by $class");
+        if (empty($array)) {
+            return null;
         }
 
-        return $object;
+        return $array[array_rand($array)];
     }
 
     /**
@@ -143,9 +144,13 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         self::$count++;
     }
 
-    private function uniqueRef($name, $class): string
+    /**
+     * Add or update
+     */
+    public function setReference($name, $object): void
     {
-        return $class . ':' . $name;
+        $reference = $this->uniqueRef($name, $object::class);
+        parent::setReference($reference, $object);
     }
 
 }
