@@ -3,7 +3,7 @@
 
 /** @noinspection GrazieInspection */
 
-namespace Interface;
+namespace Marty\McFly\Interface;
 
 interface CreateInterface
 {

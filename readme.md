@@ -1,15 +1,15 @@
-Luke Skywalker
+Marty MacFly
 ==================
 
-Luke Skywalker - May the force be with you to write your Symfony fixtures
-Luke Skywalker allows you to quickly and easily create fixtures to simplify development and testing for Symfony.
+Marty MacFly - Back to the Future to write your Symfony fixtures
+Marty MacFly allows you to quickly and easily create fixtures to simplify development and testing for Symfony.
 
 ## Installing
 
 [PHP](https://php.net) 8.2+ and [Composer](https://getcomposer.org) are required.
 
 ```bash
-composer req --dev Luke/Skywalker
+composer req --dev Marty/MacFly
 ```
 
 ## Main features
@@ -25,4 +25,4 @@ composer req --dev Luke/Skywalker
 
 ## License
 
-Luke Skywalker is licensed under [The MIT License (MIT)](LICENSE).
+Marty MacFly is licensed under [The MIT License (MIT)](LICENSE).

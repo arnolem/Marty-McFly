@@ -1,10 +1,10 @@
 {
-    "name": "luke/skywalker",
+    "name": "marty/mcfly",
     "type": "library",
     "license": "MIT",
     "homepage": "https://www.wixiweb.fr",
     "keywords": ["fixture", "data", "test", "faker", "database", "environment", "env", "symfony"],
-    "description": "Luke Skywalker - May the force be with you to write your Symfony fixtures",
+    "description": "Marty McFly - May the force be with you to write your Symfony fixtures",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "authors": [
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Luke\\Skywalker\\": "src/"
+            "Marty\\McFly\\": "src/"
         }
     }
 }
