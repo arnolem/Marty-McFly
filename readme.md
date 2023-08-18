@@ -84,6 +84,13 @@ class CompanyFixtures extends Fixture
     {
         // Create a random Company, persist it (for database), and automatically add a reference to use it in other fixtures.
         $this->create();
+        
+        // Create a random Company to "Paris"
+        for ($i=0 ; $i<10 ; $i++) {
+            $this->create()
+                ->setCity('Paris')
+                ->setPostalCode('75000');    
+        }
 
         // Finally, flush to the database
         $manager->flush();
@@ -243,12 +250,9 @@ class InvoiceFixture extends Fixture implements DependentFixtureInterface
     public function create(string|array $references = null): UnavailablePeriod
     {
         
-        /** @var User $user */
-        $randomUser = $this->getRandomReferenceByClass(User::class);
-
         $invoice = (new Invoice())
             ->setCreatedAt(new DateTimeImmutable())
-            ->setNumber(InvoiceFixture::count()); // the current number, auto-incrementation and save()
+            ->setNumber(InvoiceFixture::count()) // the current number, auto-incrementation and save()
             ->setUser($this->getRandomReferenceByClass(User::class)) // a random User
             ->setStatus(self::randomValue(Status::cases())) // randomly a value of Status Enum
             ->setConfirmed(self::randomValue([True, False])) // randomly True or False
