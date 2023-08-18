@@ -4,7 +4,7 @@
     "license": "MIT",
     "homepage": "https://www.wixiweb.fr",
     "keywords": ["fixture", "data", "test", "faker", "database", "environment", "env", "symfony"],
-    "description": "Marty McFly - May the force be with you to write your Symfony fixtures",
+    "description": "Marty McFly - Back to the Future to write your Symfony fixtures",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "authors": [
