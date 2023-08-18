@@ -1,0 +1,26 @@
+{
+    "name": "luke/skywalker",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://www.wixiweb.fr",
+    "keywords": ["fixture", "data", "test", "faker", "database", "environment", "env", "symfony"],
+    "description": "Luke Skywalker - May the force be with you to write your Symfony fixtures",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Arnaud Lemercier",
+            "email": "arnaud@wixiweb.fr"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "fakerphp/faker": "1.*",
+        "doctrine/doctrine-fixtures-bundle": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Luke\\Skywalker\\": "src/"
+        }
+    }
+}
