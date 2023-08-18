@@ -248,7 +248,7 @@ class InvoiceFixture extends Fixture implements DependentFixtureInterface
 
         $invoice = (new Invoice())
             ->setCreatedAt(new DateTimeImmutable())
-            ->setNumber(InvoiceFixture::count()); // the current number, auto-incrementation and save()
+            ->setNumber(InvoiceFixture::count()) // the current number, auto-incrementation and save()
             ->setUser($this->getRandomReferenceByClass(User::class)) // a random User
             ->setStatus(self::randomValue(Status::cases())) // randomly a value of Status Enum
             ->setConfirmed(self::randomValue([True, False])) // randomly True or False
