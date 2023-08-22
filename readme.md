@@ -9,7 +9,7 @@ Marty MacFly allows you to quickly and easily create fixtures to simplify develo
 
 ## Installing
 
-[PHP](https://php.net) 8.2+ and [Composer](https://getcomposer.org) are required.
+[PHP](https://php.net) 8.0+ and [Composer](https://getcomposer.org) are required.
 
 ```bash
 composer req --dev Marty/McFly
