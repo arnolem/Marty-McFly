@@ -14,9 +14,9 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "8.*",
         "fakerphp/faker": "1.*",
-        "doctrine/doctrine-fixtures-bundle": "^3.4"
+        "doctrine/doctrine-fixtures-bundle": "3.*"
     },
     "autoload": {
         "psr-4": {
