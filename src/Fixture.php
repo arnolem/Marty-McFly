@@ -3,12 +3,12 @@
 namespace Marty\McFly;
 
 use Doctrine\Bundle\FixturesBundle\Fixture as DoctrineFixture;
+use Exception;
 use Faker\Factory;
 use Faker\Generator;
 use Marty\McFly\Interface\CreateInterface;
 use ReflectionClass;
 use ReflectionProperty;
-use RuntimeException;
 
 abstract class Fixture extends DoctrineFixture implements CreateInterface
 {
@@ -66,7 +66,7 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         $referenceByClass = $this->getReferencesByClass($class);
         $object           = self::randomValue($referenceByClass);
         if ($object === null) {
-            throw new RuntimeException("No reference by $class");
+            throw new \RuntimeException("No reference by $class");
         }
 
         return $object;
