@@ -25,14 +25,14 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         return self::$count;
     }
 
-    protected static function setFaker(Generator $faker): void
-    {
-        self::$faker = $faker;
-    }
-
     protected static function getFaker(): Generator
     {
         return self::$faker;
+    }
+
+    protected static function setFaker(Generator $faker): void
+    {
+        self::$faker = $faker;
     }
 
     /**
@@ -70,23 +70,6 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         }
 
         return $object;
-    }
-
-    /**
-     * Create an entity from array (by reflection) with default value, save it and reference it automatically for retrieve
-     */
-    public function createAndSave(
-        string $className,
-        array $properties,
-        array $default = null,
-        array|string $references = null
-    ) {
-
-        $entity = $this->createFromProperties($className, $properties, $default);
-
-        $this->save($entity);
-
-        return $entity;
     }
 
     /**
@@ -131,6 +114,23 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         }
 
         return $array[array_rand($array)];
+    }
+
+    /**
+     * Create an entity from array (by reflection) with default value, save it and reference it automatically for retrieve
+     */
+    public function createAndSave(
+        string $className,
+        array $properties,
+        array $default = null,
+        array|string $references = null
+    ): object {
+
+        $entity = $this->createFromProperties($className, $properties, $default);
+
+        $this->save($entity);
+
+        return $entity;
     }
 
     /**
