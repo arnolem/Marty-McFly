@@ -21,7 +21,7 @@ interface CreateInterface
      * @example $this->create('price:100')->setPrice(100) // Créée une entité aléatoire sur l'index 'price:100'
      * @example $this->create(['price:100', 'duration:60'])->setPrice(100)->setDuration(60) // Créée une entité aléatoire sur l'index 'price:100' et 'duration:60'
      */
-    public function create(string|array $references = null): object;
+    public function create(array $properties, string|array $references = null): object;
 
     /**
      * Récupère le nombre d'objet créé pour itéré facilement dessus
