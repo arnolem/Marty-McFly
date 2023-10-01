@@ -139,7 +139,7 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     {
 
         // Fusionne avec les valeurs par défaut
-        $properties = array_merge($default, $properties);
+        $properties = array_merge($default ?? [], $properties ?? []);
 
         // Créez une instance de la classe ReflectionClass
         $reflectionClass = new ReflectionClass($className);
