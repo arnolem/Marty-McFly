@@ -73,6 +73,23 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     }
 
     /**
+     * Create an entity from array (by reflection) with default value, save it and reference it automatically for retrieve
+     */
+    public function createAndSave(
+        string $className,
+        array $properties,
+        array $default = null,
+        array|string $references = null
+    ) {
+
+        $entity = $this->createFromProperties($className, $properties, $default);
+
+        $this->save($entity);
+
+        return $entity;
+    }
+
+    /**
      * @return array<object>
      */
     public function getReferencesByClass(string $class): array
