@@ -6,6 +6,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture as DoctrineFixture;
 use Faker\Factory;
 use Faker\Generator;
 use Marty\McFly\Interface\CreateInterface;
+use ReflectionClass;
+use ReflectionProperty;
 
 abstract class Fixture extends DoctrineFixture implements CreateInterface
 {
@@ -22,14 +24,14 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         return self::$count;
     }
 
-    protected static function setFaker(Generator $faker): void
-    {
-        self::$faker = $faker;
-    }
-
     protected static function getFaker(): Generator
     {
         return self::$faker;
+    }
+
+    protected static function setFaker(Generator $faker): void
+    {
+        self::$faker = $faker;
     }
 
     /**
@@ -63,7 +65,7 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         $referenceByClass = $this->getReferencesByClass($class);
         $object           = self::randomValue($referenceByClass);
         if ($object === null) {
-            throw new RuntimeException("No reference by $class");
+            throw new \RuntimeException("No reference by $class");
         }
 
         return $object;
@@ -114,6 +116,47 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     }
 
     /**
+     * Create an entity from array (by reflection) with default value, save it and reference it automatically for retrieve
+     */
+    public function createAndSave(
+        string $className,
+        ?array $properties = null,
+        ?array $default = null,
+        array|string $references = null
+    ): object {
+
+        $entity = $this->createFromProperties($className, $properties, $default);
+
+        $this->save($entity, $references);
+
+        return $entity;
+    }
+
+    /**
+     * Create an instance of the entity with Reflection for setting all properties without setter or constructor
+     */
+    public function createFromProperties(string $className, array $properties = [], array $default = [])
+    {
+
+        // Fusionne avec les valeurs par défaut
+        $properties = array_merge($default ?? [], $properties ?? []);
+
+        // Créez une instance de la classe ReflectionClass
+        $reflectionClass = new ReflectionClass($className);
+
+        // Utilisez la méthode newInstance() pour créer une instance de la classe
+        $instance = $reflectionClass->newInstance();
+
+        foreach ($properties as $property => $value) {
+            $reflectionProperty = new ReflectionProperty($instance, $property);
+            $reflectionProperty->setAccessible(true); // Rend la propriété accessible
+            $reflectionProperty->setValue($instance, $value); // Définit la valeur de la propriété
+        }
+
+        return $instance;
+    }
+
+    /**
      * Persist dans l'ObjectManager, Ajoute une référence automatique et des références manuelles
      */
     protected function save($entity, string|array $references = null): void
@@ -151,6 +194,19 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     {
         $reference = $this->uniqueRef($name, $object::class);
         parent::setReference($reference, $object);
+    }
+
+    /**
+     * Generate X entities in one line
+     */
+    public function generateMany(int $number, ?array $properties = null): array
+    {
+        $list = [];
+        for ($i = 0; $i < $number; $i++) {
+            $list[] = $this->generate($properties);
+        }
+
+        return $list;
     }
 
 }
