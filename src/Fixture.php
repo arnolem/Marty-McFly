@@ -6,6 +6,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture as DoctrineFixture;
 use Faker\Factory;
 use Faker\Generator;
 use Marty\McFly\Interface\CreateInterface;
+use ReflectionClass;
+use ReflectionProperty;
+use RuntimeException;
 
 abstract class Fixture extends DoctrineFixture implements CreateInterface
 {
@@ -111,6 +114,30 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         }
 
         return $array[array_rand($array)];
+    }
+
+    /**
+     * Create an instance of the entity with Reflection for setting all properties without setter or constructor
+     */
+    public function createFromProperties(string $className, array $properties, array $default = null)
+    {
+
+        // Fusionne avec les valeurs par défaut
+        $properties = array_merge($default, $properties);
+
+        // Créez une instance de la classe ReflectionClass
+        $reflectionClass = new ReflectionClass($className);
+
+        // Utilisez la méthode newInstance() pour créer une instance de la classe
+        $instance = $reflectionClass->newInstance();
+
+        foreach ($properties as $property => $value) {
+            $reflectionProperty = new ReflectionProperty($instance, $property);
+            $reflectionProperty->setAccessible(true); // Rend la propriété accessible
+            $reflectionProperty->setValue($instance, $value); // Définit la valeur de la propriété
+        }
+
+        return $instance;
     }
 
     /**
