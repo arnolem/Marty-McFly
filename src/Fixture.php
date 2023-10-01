@@ -133,17 +133,6 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     }
 
     /**
-     * Generate X entities in one line
-     */
-    public function generateMany(int $number, ?array $properties = null) : array {
-        $list = [];
-        for ($i = 0; $i < $number; $i++) {
-            $list[] = $this->generate($properties);
-        }
-        return $list;
-    }
-
-    /**
      * Create an instance of the entity with Reflection for setting all properties without setter or constructor
      */
     public function createFromProperties(string $className, array $properties, array $default = null)
@@ -205,6 +194,19 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     {
         $reference = $this->uniqueRef($name, $object::class);
         parent::setReference($reference, $object);
+    }
+
+    /**
+     * Generate X entities in one line
+     */
+    public function generateMany(int $number, ?array $properties = null): array
+    {
+        $list = [];
+        for ($i = 0; $i < $number; $i++) {
+            $list[] = $this->generate($properties);
+        }
+
+        return $list;
     }
 
 }
