@@ -3,7 +3,6 @@
 namespace Marty\McFly;
 
 use Doctrine\Bundle\FixturesBundle\Fixture as DoctrineFixture;
-use Exception;
 use Faker\Factory;
 use Faker\Generator;
 use Marty\McFly\Interface\CreateInterface;
