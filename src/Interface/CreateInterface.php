@@ -14,6 +14,7 @@ interface CreateInterface
      * Deux objets de classe différentes peuvent avoir le même index
      *
      * @todo : Il s'agit d'un index et non d'un TAG, il ne peut pas y avoir plusieurs instances de la même entités avec un même index.
+     * @todo : Mettre à jour cette documentation avec les nouveautés de generate
      * @example $this->create() // Créée une entité aléatoire
      * @example $this->create()->setPrice(100) // Créée une entité aléatoire avec un prix fixé à 100
      * @example $this->create()->setPrice(100)->setDuration(60) // Créée une entité aléatoire avec un prix fixé à 100 et une durée à 60

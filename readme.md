@@ -64,11 +64,6 @@ class CompanyFixtures extends Fixture
         // TODO: Implement generate() method.
         throw new \RuntimeException("The generate() method is not implemented.");
     }
-
-    public function create(array|string $references = null): object
-    {
-
-    }
 }
 ```
 
