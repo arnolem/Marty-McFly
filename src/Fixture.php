@@ -135,7 +135,7 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     /**
      * Create an instance of the entity with Reflection for setting all properties without setter or constructor
      */
-    public function createFromProperties(string $className, array $properties, array $default = null)
+    public function createFromProperties(string $className, array $properties = [], array $default = [])
     {
 
         // Fusionne avec les valeurs par défaut
