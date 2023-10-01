@@ -121,14 +121,14 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
      */
     public function createAndSave(
         string $className,
-        array $properties,
-        array $default = null,
+        ?array $properties = null,
+        ?array $default = null,
         array|string $references = null
     ): object {
 
         $entity = $this->createFromProperties($className, $properties, $default);
 
-        $this->save($entity);
+        $this->save($entity, $references);
 
         return $entity;
     }
