@@ -1,0 +1,22 @@
+root = true
+
+[*]
+charset                  = utf-8
+end_of_line              = lf
+insert_final_newline     = true
+trim_trailing_whitespace = true
+indent_style             = space
+indent_size              = 4
+
+[.editorconfig]
+ij_editorconfig_align_group_field_declarations     = true
+ij_editorconfig_space_after_comma                  = true
+ij_editorconfig_spaces_around_assignment_operators = true
+
+[*.php]
+ij_php_concat_spaces                 = true
+ij_php_space_after_unary_not         = false
+ij_php_space_before_unary_not        = false
+ij_php_spaces_around_shift_operators = true
+ij_php_variable_naming_style         = camel_case
+ij_php_getters_setters_naming_style  = camel_case
