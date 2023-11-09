@@ -199,11 +199,15 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     /**
      * Generate X entities in one line
      */
-    public function generateMany(int $number, ?array $properties = null): array
+    public function generateMany(int $number, array|callable|null $properties = null): array
     {
         $list = [];
         for ($i = 0; $i < $number; $i++) {
-            $list[] = $this->generate($properties);
+            $params = $properties;
+            if (is_callable($properties)) {
+                $params = $properties();
+            }
+            $list[] = $this->generate($params);
         }
 
         return $list;
