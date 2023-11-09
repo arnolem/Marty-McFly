@@ -260,6 +260,35 @@ class CompanyFixtures extends Fixture
 
 ```
 
+Create multiple entities while customizing certain properties with random values for each element.
+
+```php
+<?php
+
+// ...
+
+class CompanyFixtures extends Fixture
+{
+    public function load(ObjectManager $manager): void
+    {
+
+        // Create 10 random Company to "Paris"
+        $this->generateMany(10, function() {
+            return [
+                'city'       => 'Paris',
+                'postalCode' => self::$faker->randomElement(['75000', '75100', '75200']),
+            ];
+        });
+
+        // Finally, flush to the database
+        $manager->flush();
+    }
+
+    // ... generate() definition
+}
+
+```
+
 Create multiple entities while customizing certain properties (alternative.
 
 ```php
