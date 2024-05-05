@@ -147,8 +147,18 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
         // Utilisez la méthode newInstance() pour créer une instance de la classe
         $instance = $reflectionClass->newInstance();
 
+         // Si classe a une classe parente, enregistrer le parent
+         if ($reflectionClass->getParentClass()) {
+            $parentClass = $reflectionClass->getParentClass();
+        }
+
         foreach ($properties as $property => $value) {
-            $reflectionProperty = new ReflectionProperty($instance, $property);
+            if (isset($parentClass) && $parentClass->hasProperty($property)) {
+                // Récupère la ReflectionProperty depuis la classe parente si elle existe
+                $reflectionProperty = $parentClass->getProperty($property);
+            } else {
+                $reflectionProperty = new ReflectionProperty($instance, $property);
+            }
             $reflectionProperty->setAccessible(true); // Rend la propriété accessible
             $reflectionProperty->setValue($instance, $value); // Définit la valeur de la propriété
         }
