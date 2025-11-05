@@ -96,7 +96,7 @@ abstract class Fixture extends DoctrineFixture implements CreateInterface
     /**
      * Get by classname and ID
      */
-    public function getReference($name, $class = null): ?object
+    public function getReference(string $name, string $class = ''): object
     {
         $reference = $this->uniqueRef($name, $class);
 
